@@ -1,0 +1,28 @@
+우측하단에 로드될 web/app 플렛폼 선택 => chrome, edge, window
+ctrl + s + 상단에 번개표시 클릭 => hot reload
+
+flutter는 모두 widget
+*widget
+	UI를 만들어주는 각각의 구성요소
+	트리구조를 가짐
+
+Text widget
+	화면상에 글자를 입력하고 싶을 때 사용하는 위젯
+	Text widget은 데이터타입이 String인 것만 넣을 수 있음
+	Text("hi")
+
+SafeArea widget
+	휴대폰마다 각각 다른 "노치"
+	화면의 가장 상단(시간, 배터리 부분), 하단을 제외한 부분
+	속성: child에는 데이터타입이 widget인 것만 들어갈 수 있다
+	SafeArea(child: Text("hi"))
+
+Center widget
+	자식의 위젯(child)를 가운데(센터)로 위치하는 위젯
+	플러터가 트리구조형식
+	즉, 부모가 있고 자식에게 능력을 물려줌. 위젯이 위젯을 포함
+
+Icon widget
+	화면상에 아이콘을 보여줄 때 사용
+	데이터타입이 IconData인 것만 넣어줄 수 있음
+	Icon(Icons.add)
