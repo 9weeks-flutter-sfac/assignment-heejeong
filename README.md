@@ -10,3 +10,7 @@
 
 2일차 과제
 <div><img src="https://file.notion.so/f/f/4f763fdd-bbba-45d6-8677-39e1a021e572/4d67c1ae-6f3f-4557-856a-1734b80fe016/2%EC%9D%BC%EC%B0%A8.gif?id=d141b784-daad-4b90-841d-c6d579b2d683&table=block&spaceId=4f763fdd-bbba-45d6-8677-39e1a021e572&expirationTimestamp=1695196800000&signature=Kz2FWRZyGc7aV8MG59du-mNI56rk-RacLfBnI_mL3c0" width="13%" height="13%"></div>
+
+3일차 과제
+<div><img src="https://sniperfactory.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd9e1380a-9842-4157-adb2-03704e4bcab0%2Fyoutubemusic_app.png?table=block&id=b5e7dc19-b141-44c2-997f-0e34a1939fe7&spaceId=4f763fdd-bbba-45d6-8677-39e1a021e572&width=380&userId=&cache=v2" width="13%" height="13%"></div>
+
