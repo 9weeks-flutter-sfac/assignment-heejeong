@@ -1,0 +1,176 @@
+디자인 트렌드
+	옛: 스큐어모피즘(ios6) / 현: 플렛디자인(ios7)
+	스큐어모피즘 > 플렛디자인 / 머티리얼디자인
+
+머티리얼 디자인(MaterialDesign)
+	구글에서 제작하고 제안한 웹/앱 디자인가이드 시스템
+	플러터에서 머티리얼 디자인을 쉽게 개발할 수 있도록 "디자인시스템"을 기반하는 위젯을 만들어줌
+	MaterialApp 위젯
+
+MaterialApp 위젯
+	MaterialApp을 최상단 위젯으로 감싸면, 위젯에서 기본적인 Material에 필요한 디자인 요소가 어플 전체에 적용
+	MaterialApp은 따라다니는 Scaffold라는 위젯이 있음
+	건물(앱)을 짓기 위해서 땅(MaterialApp)과 철근(Scaffold)이 필요하듯 꼭 작성 필요
+	최상단의 위젯으로 많이 사용
+	비슷한 위젯으로 CupertinoApp 있지만 주로 사용 X
+	Material Design
+		Components: https://m2.material.io/components
+		Icon: https://fonts.google.com/icons
+
+AppBar 위젯
+	앱의 헤더
+	위젯이지만 Scaffold에 appBar라는 속성에만 넣어서 사용 가능
+	SafeArea를 통해 얻은 "안전영역"을 기본적으로 제공
+	
+	appBar: AppBar(
+		title: Text('플러터 굉장하다'),
+	)
+	
+	앱바 가운데 정렬
+	appBar: AppBar(
+		title: Text('플러터 굉장하다'),
+		centerTitle: true,	//가운데 정렬
+	)
+	android: 기본적으로 왼쪽 정렬
+	ios: 기본적으로 가운데 정렬	
+
+	배경색 없애기 & 그림자 없애기
+	appBar: AppBar(
+		backgroundColor: Colors.transparent,
+		elevation: 0
+	)
+	기본적으로 그림자가 적용되어 있음
+	그림자 제거해야 배경이 투명해짐
+
+	글씨 색
+	appBar: AppBar(
+		title: Text('플러터 굉장하다'),
+		foregroundColor: Colors.black
+	)
+	기본적으로 글씨 색은 흰색
+
+	제일 앞에 아이콘 넣기
+	appBar: AppBar(
+		title: Text('플러터 굉장하다'),
+		leading: Icon(Icons.access_time)
+	)
+
+	제일 뒤에 아이콘 넣기
+	appBar: AppBar(
+		title: Text('플러터 굉장하다'),
+		actions: [
+			Padding(
+				padding: const EdgeInsets.all(8.0),
+				child: Icon(Icons.share)
+			),
+			Padding(
+				padding: const EdgeInsets.all(8.0),
+				child: Icon(Icons.shopping_cart)
+			),
+			Padding(
+				padding: const EdgeInsets.all(8.0),
+				child: Icon(Icons.search)
+			)
+		]
+	)
+	뒤에 넣는 아이콘이 1개 이상일 수 있기 때문에 리스트 형태
+
+BottomNavigaitonBar 위젯
+	앱들의 스크린 네비게이션
+	위젯이지만 Scaffold에 BottomNavigaitonBar 속성에만 넣어서 사용 가능
+	필수 속성값은 item 이며, List<BottomNavigationItem> 데이터 타입을 줘야함
+
+	bottomNavigationBar: BottomNavigationBar(
+		items: [
+			BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
+			BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈')
+		]
+	)
+	조건! items에 제공되는 List의 length(개수)는 2개 이상
+
+FAB(Floating Action Button) 위젯
+	위젯이지만 기본적으로 Scaffold에 FloatingActionButton 속성에만 넣어서 사용
+	(그냥 위젯처럼 사용 가능)
+	FloatingActionButton 필수 속성값은 onPressed 이며, function을 줘야함
+
+	floatingActionButton: FloatingActionButton(
+		onPressed: (){},
+		child: Icon(Icons.add),	//아이콘 넣기
+		mini: true	//버튼 작게
+          	backgroundColor: Colors.black12,
+          	elevation: 0, //그림자 제거
+	)
+
+같은 기능 다양한 위젯(for 연락처앱)
+
+	1. 기존 ListTile 활용
+		ListTile(
+			title:
+			subtitle:
+			...
+		)
+
+	2. Constructor Parameter
+		ContactTile('이테디', '010-1111-2222', 	'https://picsum.photos/100/100')
+
+	3. Named Parameter
+		ContactTile(
+			name: '이테디'
+			phone: '010-1111-2222'
+			imgUrl: 'https://picsum.photos/100/100'
+		)
+
+Flutter 커스텀 위젯 만들기
+	내가 표현하고자하는 디자인요소를 명확히 선언 가능
+	자주쓰는 위젯 개별적 관리
+	코드 유지보수 및 관리에 용이
+
+클레스 기본 폼 자동 생성
+	stless -> flutter stateless widget 클릭
+
+	import 'package:flutter/material.dart';
+
+	class MyWidget extends StatelessWidget {
+	  const MyWidget({super.key});
+
+	  @override
+	  Widget build(BuildContext context) {
+	    return const Placeholder();
+	  }
+	}	
+
+pubspec.yaml
+	각 파일당 입력해주어도 됌
+	하나의 폴더 안에 있는 모든 파일 사용할 경우 해당 폴더만 작성해도 됌
+
+  assets:
+     - assets/images/item_drink1.jpeg
+     - assets/images/item_drink2.jpeg
+     - assets/images/item_drink3.jpeg
+     - assets/images/item_drink4.jpeg
+     - assets/images/item_drink5.jpeg
+
+  assets:
+    - assets/images/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
