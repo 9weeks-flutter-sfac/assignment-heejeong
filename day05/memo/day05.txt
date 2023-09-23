@@ -1,0 +1,234 @@
+Controller
+	작성되고 있는 데이터를 가져올 때 사용
+	위젯의 특정한 액션을 취하거나, 조종하고 싶을 때 사용
+	Controller는 위젯 내에 변수로 선언하고, 그 변수를 조작
+
+TestField & Controller(TextEditingController())
+	onChanged 이벤트는 입력 하나 마다 이벤트 핸들러가 발생하는데
+	controller를 사용하면 원할 때만 이벤트 핸들러 발생시킬 수 있음
+
+	class MyApp extends StatelessWidget {
+		const MyApp({super.key});
+
+		@override
+		Widget build(BuildContext context){
+			// controller 생성, 변수에 대입
+			var myController = TextEditingController();
+			return TextField(
+				//TextField 위젯과 연결
+				controller: myController,
+			);
+		}
+	}
+
+PageView & Controller
+	class MyApp extends StatelessWidget {
+		const MyApp({super.key});
+
+		@override
+		Widget build(BuildContext context){
+			// controller 생성, 변수에 대입
+			var myController = PageController();
+			return PageVeiew(
+				//PageView 위젯과 연결
+				controller: myController,
+				children:[]
+			);
+		}
+	}
+
+다른 페이지로 이동하기(Routing)
+	scaffold 단위를 Page라고 생각하면 쉬음
+	페이지를 하나 더 만든다면? Scaffold를 최상위로 올리자★★★
+	(지금까지 MaterialApp이 최상위였음)
+	Routing하는 방법은 Navigation을 활용하는 것
+
+MaterialApp
+	최상위 위젯이 MaterialApp 이라면
+	실행하려는 함수에서는 다른 페이지로 이동하지 못함(Routing 못함)
+
+	주의! MaterialApp안에 Scaffold가 없다면 이상한 디자인이 나옴
+	void main(){
+	  runApp(MyWidget());
+	}
+
+	class MyWidget extends StatelessWidget {
+	  const MyWidget({super.key});
+
+	  @override
+	  Widget build(BuildContext context) {
+	    return MaterialApp(
+	      home: Text('d'),
+	    );
+	  }
+	}
+	--------------------------------------------------
+	//StatelessWidget
+
+	void main(){
+	  runApp(MyWidget());
+	}
+
+	class MyWidget extends StatelessWidget {
+	  const MyWidget({super.key});
+
+	  @override
+	  Widget build(BuildContext context) {
+	    return MaterialApp(
+	      home: Example(),
+	    );
+	  }
+	}
+	
+	class Example extends StatelessWidget{
+		const Example({super.key});
+
+		@overide
+		Widget build(BuildContext context){
+			변수작성
+			return Scaffold();
+		}
+	}
+	-----------------------------------------------
+	//StatefulWidget
+
+	void main(){
+	  runApp(MyWidget());
+	}
+
+	class MyWidget extends StatelessWidget {
+	  const MyWidget({super.key});
+
+	  @override
+	  Widget build(BuildContext context) {
+	    return MaterialApp(
+	      home: Example2(),
+	    );
+	  }
+	}
+	
+	class Example2 extends StatefulWidget{
+		const Example2({super.key});
+
+		@overide
+		State<Example2> createState() => _Example2State();
+	}	
+
+	class _Example2State extends State<Example2>{
+		변수작성
+
+		@overide
+		Widget build(BuildContext context) {
+			return Scaffold();
+		}
+	}
+
+Navigation
+	새로 페이지를 불러온다(Push)
+	현재 페이지를 뺀다(Pop)
+
+	*Pages in th navigation stack
+	늦게 들어온 것이 가장 먼저 빠지는 구조(FILO)
+
+	Navigator.push(
+		context,
+		MaterialPageRouter(
+			builder: (context) => [다음페이지]firstPage()
+		)
+
+	);
+
+	Navigator.pop(context);
+
+	context: 위젯의 상태정보를 담고 있음. 다음 페이지에 현재 상태정보를 보내줌. 원본은 빌드함수 안에 있음
+	.push를 저장(실행)하면 다음페이지(firstPage())로 이동하고
+	이동한 페이지의 헤더를 보면 leading부분에 back아이콘이 생성되어 있음
+	(전의 페이지로 돌아갈 수 있도록 자동 생성)
+	(AppBar(automaticallyImplyLeading: false)을 작성하면 아이콘 안나옴)
+
+
+비교연산자
+
+if문(제어)
+	if(조건문){실행코드} else{실행코드}
+	
+	조건문에 결과값의 타입은 bool타입이여야함
+
+로그인
+  //안좋은 코드 예시
+    /* bool login(String id, String pw){
+      if(pw.length >= 8){
+        if(isEmail(id)){
+          if(exists(id)){
+            //패스워드 검사...서버와 통신해서 로그인
+            return true;
+          }
+        }
+      }
+      return false;
+    } */
+
+    bood login(String id, String pw){
+      if(pw.length < 8 ) return false;
+      if(!isEmail(id)) return false;
+      if(!exists(id)) return false;
+
+      //패스워드 검사...서버와 통신해서 로그인
+      return true;
+    }
+
+	가독성이 좋고 함수의 동작흐름을 명확하게 하기
+
+플러터 안에서 if문 쓰는 방법
+	1. List안에 있는 경우 if문을 활용하여 보여줄 위젯만 보여줄 수 있음
+		이때 기본 구문은 제외하고 if(~)만 입력하도록 하자
+		(중괄호 안씀)
+
+	children: [
+		Text('안녕하세요')
+		if(login)
+			TextButton(
+				onPressed: (){
+					//로그인
+				}
+				child: Text('로그인'),
+			),
+	]
+
+	이 때, else 문을 사용하지 못함
+	이것을 해결하기 위해 삼항연산자를 사용
+
+삼항연산자
+	if문을 3파트로 나눌 수 있음
+	statement ? Text('true') : Text('false')
+
+Checkbox 위젯 | Visibility 위젯
+
+	Checkbox(
+            value: isChecked[bool 타입],
+            onChanged: (value){
+              isChecked = value!;
+              setState(() {});
+        },
+
+	Visibility(
+            visible: isLogined[bool 타입],
+            child: Text("당신은 회원입니다"),
+        ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
