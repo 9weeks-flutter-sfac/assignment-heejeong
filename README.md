@@ -11,7 +11,7 @@ Text, Icon 등 기본 위젯 활용
 
 <Strong>2일차 과제</Strong><br>
 Container, ListView, PageView & 폴더/파일
-<div><img src="https://file.notion.so/f/f/30db20a9-090d-4eab-88e9-e004dc368042/e69df6cc-fc54-4067-bd12-7b647ac0e848/2%EC%9D%BC%EC%B0%A8.gif?id=3c8b7cc1-e536-47d3-9662-5fc97bf98764&table=block&spaceId=30db20a9-090d-4eab-88e9-e004dc368042&expirationTimestamp=1695333600000&signature=NNc4MRZmLGF6edMiMT590PJgnpCfboN-CkNTXlqbIWc&downloadName=2%EC%9D%BC%EC%B0%A8.gif" width="15%" height="15%"></div>
+<div><img src="https://file.notion.so/f/f/30db20a9-090d-4eab-88e9-e004dc368042/e69df6cc-fc54-4067-bd12-7b647ac0e848/2%EC%9D%BC%EC%B0%A8.gif?id=3c8b7cc1-e536-47d3-9662-5fc97bf98764&table=block&spaceId=30db20a9-090d-4eab-88e9-e004dc368042&expirationTimestamp=1695600000000&signature=4PowVqfyLL-TLveJbll-LseBoCgHNQG2VSa8CkC_Lzg&downloadName=2%EC%9D%BC%EC%B0%A8.gif" width="15%" height="15%"></div>
 <br>
 
 <Strong>3일차 과제</Strong><br>
