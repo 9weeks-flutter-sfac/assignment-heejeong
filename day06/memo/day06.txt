@@ -1,0 +1,197 @@
+for문
+	for(시작점;종료점;증감점){
+		//반복코드
+	}
+
+	시작점: var i=1 => 1부터 시작
+	종료점: i <= 10 => 10까지 실행
+	증감점: i++ => 1씩 증가
+
+List & for
+	List myFriends = ['저스틴', '주노', '크리스']
+	
+	for(var i=0; i<=myFriends.lenght; i++){
+		print(myFriends[i]);
+	}
+
+	for(var friend in myFriends){
+		print(friend);
+	}
+
+	myFriends.forEach((friend){
+		print(friend);
+	})
+
+메소드(멤버 함수)			멤버 변수
+	
+
+List의 멤버함수
+	var myFriends = ['Teddy', 'Chris', 'Juno'];
+
+	.forEach()
+	myFriends.forEach((value){
+		print('${value} 출력');
+	})
+
+	.map()★★★
+	변수안의 요소들을 전부 원하는 형태로 바꾸고 싶을 때 사용
+	주의!! 결과 값의 데이터타입이 Iterable 이라는 것을 명심
+	참고) Iterable : 반복가능한 것
+	Iterable를 List로 다시 바꿔줌(.toList() 멤버 함수 사용)
+
+	myFriends.map((e){
+		return Text(e);
+	}).toList();
+
+	결과: [Text('Teddy'), Text('Chris'), Text('Juno')]
+
+	.where()
+	필터를 걸어서 조건에 해당하는 요소만 남기고 싶을 때 사용
+	주의!! 결과 값의 데이터타입이 Iterable 이라는 것을 명심
+	
+	myFriends.where((e){
+		return e.lenght == 5;
+	})
+
+	결과: [Teddy, Chris]	
+
+map()
+	1. 카테고리
+
+	var categories = ['식품', '생활', '디지털', '뷰티'];
+
+	우리의 변수 categories의 데이터 타입은 List<String>
+	Row의 속성 children에게 줘야할 데이터 타입은 List<Widget>
+	
+	Row(
+            children: categories.map((e){
+                return Text(e);
+              }).toList()
+	)
+
+	
+	ListView(
+            scrollDirection: Axis.horizontal,
+            children: categories.map((e){
+                return Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Chip(label: Text(e),),
+                );
+              }).toList()
+          )
+
+	2. 친구들
+	
+	var myFriends = ['Teddy', 'Chris', 'Juno'];
+
+	우리의 변수 categories의 데이터 타입은 List<String>
+	Row의 속성 children에게 줘야할 데이터 타입은 List<Widget>
+
+	Column(
+            children: myFriends.map((e){
+                return ListTile(
+                  title: Text(e),
+                  subtitle: Text('동네친구 $e'),
+                  trailing: Icon(Icons.call),
+                );
+              }).toList()
+	)
+
+	3. 10개월간의 수학점수
+
+	var mathScore = [96, 92, 73, 98, 70, 82, 48, 97];
+
+	Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: mathScore.map((e){
+                return Container(
+                  width: e*2,
+                  height: 24,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.greenAccent,
+                        Colors.white
+                      ]
+                    )
+                  ),
+                );
+              }).toList()
+          )
+
+where()
+	Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: mathScore.where((e){
+                      return e <= 80;
+                    }).map((e){
+                        return Container(
+                          width: e*2,
+                          height: 24,
+                          margin: const EdgeInsets.only(bottom: 8),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.greenAccent,
+                                Colors.white
+                              ]
+                            )
+                          ),
+                        );
+                      }).toList()
+                  )
+
+축약형(Arrow Function(Expression Body Function))
+
+	void main(){
+		return runApp(MyApp());
+	}
+
+	중괄호 + return 방식: Block body Function
+
+	축약: void main() => runApp(MyApp());
+
+ListView 위젯
+	ListView 안에 우리가 사용할 위젯들을 List<Widget> 데이터 타입으로 보냈음
+
+ListView.builder 위젯
+	정해준 데이터를 토대로 ListView를 만들어주는 위젯
+	itemBuilder 라는 필수 속성값을 통해 위젯을 생성
+	itemBuilder 에는 return으로 위젯을 반환해주어야함
+
+	ListView.builder(
+	    itemCount: 10
+            itemBuilder: (context, index){
+              return Text(index.toString());
+            }
+          )
+	
+	itemCount: index값이 1씩 증가되며, 0부터 원하는 수까지 돌릴 수 있음
+
+	ListView 만을 활용했을 때, 인덱싱에 벗어날 경우 범위 에러가 남
+	ListView.builder를 사용하면, index는 'itemCount: 리스트변수.lenght' 로 정해줄 수 있음
+
+ListView.builder VS map()
+	데이터가 많을 때, .map()은 전부 미리 Widget으로 바꿈
+	ListView.builder는 스크롤이 되는 영역, 실제로 사용자가 눈으로 보는 영역에 출력될 때만 Widget을 생성
+	즉, 실행 속도에서 차이가 남
+	데이터가 적을 때는 어떤 것을 사용해도 무방함
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
