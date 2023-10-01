@@ -1,0 +1,78 @@
+Map
+	데이터 타입
+	key와 value로 데이터를 담고 있음
+
+	var myInfo = {
+	    "name" : "Teddy",
+	    "height" : 199.9,
+	    "age" : 99,
+	    "phone" : "010-1111-2222"
+  	};
+
+	print(myInfo["height"])
+	결과: 199.9
+
+	print(myInfo["height"].runtimeType)
+	결과: double
+
+1. 연락처 앱
+	var myFriends = [
+		{
+		    "name" : "Teddy",
+		    "height" : 199.9,
+		    "age" : 99,
+		    "phone" : "010-1111-2222"
+	  	},
+		{
+		    "name" : "Teddy",
+		    "height" : 199.9,
+		    "age" : 99,
+		    "phone" : "010-1111-2222"
+	  	},
+		{
+		    "name" : "Teddy",
+		    "height" : 199.9,
+		    "age" : 99,
+		    "phone" : "010-1111-2222"
+	  	},
+
+	]
+
+	내친구들의 이름만 Text 위젯으로 보여주기
+	myFriends.map((e) => Text(e['name'])).toList()
+
+Map을 쓸 때 타입추론
+	Generic 사용 가능. key, value의 데이터 타입 지정 가능
+	Map<String, dynamic> => key: String, value: 어떠한 타입이든 될 수 있음
+
+	Map<String, dynamic> human1 = {
+		"name" : "Teddy",
+		"age" : 99,
+		"isProgrammer" : true,
+	}
+
+JSON
+	
+	"human1" : {
+		"name" : "Teddy",
+		"age" : 99,
+		"isProgrammer" : true,
+	}
+
+	데이터 타입 표현 가능
+	key, value 방식으로 동작
+	컴마로 값을 구분
+
+
+
+
+
+
+
+
+
+
+
+
+
+

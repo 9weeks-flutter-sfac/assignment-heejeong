@@ -19,6 +19,7 @@ class _MyWidgetState extends State<MainPage> {
           backgroundColor: Colors.white,
           elevation: 0,
           title: GestureDetector(
+            //두번 클릭할 때, 이벤트 발생
             onDoubleTap: (){
               Navigator.push(context, 
               MaterialPageRoute(builder: (context) => AdminPage()));

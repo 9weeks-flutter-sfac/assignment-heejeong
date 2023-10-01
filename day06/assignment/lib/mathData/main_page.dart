@@ -27,11 +27,9 @@ class _SquareViewState extends State<SquareView> {
         elevation: 0,
         title: GestureDetector(
             onDoubleTap: (){
-              print('체인지');
               Navigator.push(context, 
               MaterialPageRoute(builder: (context) => Chart(mathData: mathData)));
             }, 
-            child: Text('분식왕 이테디 주문하기')
           ),
       ),
       body: Column(
