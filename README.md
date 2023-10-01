@@ -49,3 +49,14 @@ List, for, map, where, ListView.builder<br>
 과제2 키오스크앱 업그레이드
 <div><img src="https://file.notion.so/f/s/693906cb-96ab-4f90-b158-d740ad6bde91/kiosk_2_app.gif?id=caf1aa05-89d4-42a0-8160-40891b0445db&table=block&spaceId=4f763fdd-bbba-45d6-8677-39e1a021e572&expirationTimestamp=1695758400000&signature=jsJEs36iazZeTPBWgXOUbR11GR7v3MBzfTOFxyrVUrk&downloadName=kiosk_2_app.gif" width="15%" height="15%">
 </div>
+<br>
+
+<Strong>7일차 과제</Strong><br>
+packages<br>
+<div></div>
+<br>
+
+<Strong>8일차 과제</Strong><br>
+HTTP, Dio, FutureBuilder, null-safety, 예외처리, 로딩 위젯<br>
+<div></div>
+<br>
