@@ -46,3 +46,227 @@ Post만 사용되는 경우
 	  print(response.statusCode); //'200'이 나오면 옳게된것
 	  print(response.body);
 	}
+
+Dio 패키지
+	기존 http 패키지보다 더 많은 기능을 담고있음
+	특히, 요청 대상에 대한 설정과 연결관한 정보를 미리 설정해줄 수 있음
+	요청 전에 데이터를 검수하거나 
+	응답이 오면 데이터를 한 번 점검하거나
+	1차적으로 가공할 수 있음
+	파일(이미지), 다중파일같은 FormData를 사용해야할 때 손쉽게 구현가능
+
+Dio를 통해 HTTP 요청하기
+	기본 설정값을 세팅할 수 있음
+
+	var dio = Dio();	//with default Options
+
+	//Set default configs
+	dio.options.baseUrl = url;
+
+	method GET
+	method POST
+	HTTP Header: user-agent
+		사용자가 접속한 브라우저가 무엇인지 알고싶을 때
+		크로링 봇을 막을 때 유용하게 사용할 때
+	HTTP Header: JWT token
+		내가 원하는 사용자에게만 데이터를 주고싶을 때
+		그들에게 미리 키를 공유해놓음
+		로그인 > 로그인성공 > 서버가 JWT 토큰 발급 > 디바이스에 저장 > 요청시 JWT 토큰 장착
+
+HTTP VS Dio
+	HTTP
+		데이터타입이 String
+
+	Dio
+		res: 모든 문자들이 따음표안에 있음
+    		res.data: 모든 문자들에 따음표가 없음
+    		데이터 타입이 Map()
+
+네트워크에 접속
+	앱 접속 -> 네트워크에서 데이터 받아오기 -> 데이터를 예쁘게 보여주기
+	네트워크에서 데이터 받아오는 방법: http 요청 -> 응답
+
+Future 데이터 타입
+	Future<T[데이터타입]>
+	await Future: Future가 끝날 때까지 기다림
+		반드시 결과 데이터를 전달 받아서 처리해야할 경우
+	
+	void main(){
+		print('로그인을 시도합니다');	//1
+		await Future.delayed(Duration(seconds:3));	//2
+		print('로그인에 성공했습니다');	//3
+		print('반가워요!');	//4
+	}
+
+	결과: 1 -> 2(3초 기다림) -> 3 -> 4
+
+	void main(){
+		print('로그인을 시도합니다');	//1
+		Future.delayed(Duration(seconds:3)).then((res){print('로그인에 성공했습니다');});	//2
+		print('로그인에 성공했습니다');	//3
+		print('반가워요!');	//4
+	}
+
+	결과: 1 -> 4 -> 3 (1번 이후에 3초 기다리는 것을 일단 실행은 함)
+
+활용	
+	await 활용
+	var url = 'https://sniperfactory.com/sfac/http_json_data_3s';
+	var sfacData = await dio.get(url);
+	print(sfacData);
+
+	then 활용
+	var url = 'https://sniperfactory.com/sfac/http_json_data_3s';
+	dio.get(url).then((sfacData){print(sfacData);});
+	print(sfacData);	//에러발생: sfacData라는 변수는 윗 함수의 지역변수
+
+Future : 데이터타입
+async: 함수 본문 앞에 선언(이 함수는 비동기 함수임을 선언)
+	코드 내부에 await이 하나라도 있으면 반드시 써줘야함
+await: 따라오는 Future(비동기)를 기다림. 동기처럼 쓸 때 사용
+
+Future의 예시
+	로그인
+	전달받은 ID, PW를 보고 실제 아이디가 존재하는지, 일치하는지 확인하는 시간이 필요
+		
+	Future<bool> login(String id, String pw) async{
+		var dio = Dio();
+		var res = await dio.post("https://sniperfactory.com/login", {"id":id, "pw":pw});
+		if(res.success){return true;}
+		return false;
+	}
+
+	인스타그램의 피드
+	인스타그램의 벡앤드에서 요청하는 유저의 친구들의 피드들을 수집하여 보내주는데 시간이 필요
+	
+	Future<List<Feed>> readFeed() async{
+		var dio = Dio();
+		var res = await dio.get("https://instagram.com/v2/api/readFeed");
+		if(res.success){return res.data;}
+		return [];
+	}
+
+	채팅방
+	채팅리스트를 불러오는데 시간이 필요
+	
+	Future<List<Feed>> readMessage(String roomId) async{
+		var dio = Dio();
+		var res = await dio.post("url", {"id":roomId});
+		if(res.success){return res.data;}
+		return [];
+	}
+
+null
+	데이터타입
+	'데이터가 존재하지 않음'을 의미
+
+	Text(null)	//표현할 데이터가 존재하지 않아 에러발생
+
+null-safety
+	변수가 null을 가질 수 있도록함
+	데이터타입에 '?'을 붙임
+	제어문을 통해 다룸
+	null이 아닐 것을 확신하면, 변수명 뒤에 '!'를 붙임
+	null인 데이터에 데이터를 넣어주려면, '??' 키워드를 사용
+
+	String myName = null;	//에러발생
+
+	String? myName = 'Teddy';
+	String? myName = null;
+
+	
+	Dart: myNmae이라는 변수는 String일 수도있고 null일 수도 있음을 의미
+
+	List<String?>	myFriends = ['Teddy', null, 'Chris', null];
+
+	Dart: myFriends 변수는 int일 수도 있고 null일 수도 있음을 의미
+
+if null
+	만약 데이터가 null이라면 에러가 날 경우를 대비하여, if문으로 핸들링해줘야 함
+	
+	String? message = "hello";
+	
+	Text(message)	//에러발생! String일수도 null일 수도 있기 때문에
+	Text(message!)	//!: null_check_operator. null이 아님을 확신할 때 사용
+
+	if(message != null)
+		Text(message!)
+	
+Map & nulll-safety
+	Map<String, dynamic> mapData = {
+		'myAge' : 99,
+		'myName' : 'Teddy'
+	}
+
+	print(mapData['myAge']);
+	//null인 map에 접근할 때 '??' 사용하여 데이터 넣음
+	print(mapData['myHeight'] ?? '나이를 불러올 수 없습니다');
+
+예외처리
+	개발자의 실수로 인하여 생각하지 못하는 로직이 실행되면 앱이 종료
+	'예외처리'는 에러가 났을 때, 당황해서 꺼지지말고 메뉴얼대로 행동하도록 하는 것
+
+	1. try-catch 에러원인 출력
+	
+	try{
+		List item = ['a','b','c'];
+		print(item[3]);
+		print('hi')
+	} catch{
+		print('에러발생 $e')
+	}
+	print('merong');
+
+	2. try-catch 예상가능 에러 설정
+	
+	try{
+		List item = ['a','b','c'];
+		print(item[3]);
+		print('hi')
+	} on RangeError{
+		print('범위에러 발생')
+	}
+	print('merong');
+
+	3. try-catch 예상가능 에러 설정 및 출력
+	
+	try{
+		List item = ['a','b','c'];
+		print(item[3]);
+		print('hi')
+	} on RangeError catch (e){
+		print('범위에러 발생. ${e}')
+	}
+	print('merong');
+
+FutureBuilder 위젯
+	Future를 실행시켜서 나온 데이터를 위젯으로 보여주고 싶을 때 사용
+	위의 변수를 사용하지 않아도 됨
+	setState를 사용하지 않아도 됨
+	Future를 대신 실행할 수 있음
+	Future를 실행하는 도중에 일어나는 상태를 계속 보고함
+		ConnectionState.done: 데이터 확인 가능
+		ConnectionState.waiting: 데이터가 들어오길 기다리는 중
+
+	FutureBuilder(
+		future: Future.delayed(Duration(second:3), ()=>"hello"),
+		builder: (context, snapshot){
+			if(snapshot.connectionState == ConnectionState.done){	// 현재 futurebuilder의 상채가 끝났을 때
+				return Text(snapshot.data!);
+
+			}
+			return SizedBox();	//빈 위젯을 보내줌
+		}
+	)
+
+로딩 위젯
+	CircularProgressIndicator 위젯
+	LinearProgressIndicator 위젯
+	flutter_spinkit 패키지
+		https://pub.dev/packages/flutter_spinkit
+
+
+
+
+
+

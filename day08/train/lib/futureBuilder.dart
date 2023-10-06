@@ -18,7 +18,7 @@ class _MyWidgetState extends State<MyWidget> {
   var res;
   // final connectivityResult = await (Connectivity().checkConnectivity());
 
-  Future<Widget> connectingEthernet() async{
+  /* Future<Widget> connectingEthernet() async{
     final connectivityResult = await (Connectivity().checkConnectivity());
 
   return FutureBuilder(
@@ -51,7 +51,7 @@ class _MyWidgetState extends State<MyWidget> {
         // );	
       }
     );
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +63,8 @@ class _MyWidgetState extends State<MyWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('sniper factory'),
-              connectingEthernet()
-              /* FutureBuilder(
+              // connectingEthernet()
+              FutureBuilder(
                 future: Future.delayed(Duration(seconds:3), ()=>res = dio.get('https://sniperfactory.com/sfac/http_day16_dogs')),
                 // future: dio.get('https://sniperfactory.com/sfac/http_test'),
                 builder: (context, snapshot){
@@ -93,7 +93,7 @@ class _MyWidgetState extends State<MyWidget> {
                   //   color: Colors.red,
                   // );	
                 }
-              ) */
+              )
             ]
             ),
         ),

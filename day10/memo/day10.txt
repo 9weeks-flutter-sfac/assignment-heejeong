@@ -1,0 +1,75 @@
+악성앱
+	해킹
+	불필요한 권한을 포함하고 있음
+		연락처 읽기
+		문자 읽기
+		오디오 녹음, 사진 촬영
+
+권한
+	사용자의 허락
+	안드로이드와 iOS는 권한에 매우 민감하고 엄격
+	앱 개발자는 앱 내에서 사용할 권한을 미리 파일에다가 적어줘야함
+	iOS의 권한 설정 파일: info.plist
+	Android 권한 설정 파일: AndroidManifest.xml
+
+	iOS: https://developer.apple.com/documentation/bundleresources/information_property_list/protected_resources
+	Android: https://developer/android.com/reference/android/Manifest.permission
+	
+
+image_picker 패키지
+
+	사진어플에서는 사진권한이 필요
+	https://pub.dev/packages/image_picker
+	갤러리를 통해 이미지를 불러오거나, 카메라를 구동시켜 촬영된 이미지를 가져올 때 사용하는 패키지
+	Android는 불필요, iOS는 권한설정 필요
+	image_picker는 이미지 파일로 'XFile'이라는 데이터타입을 사용함
+	
+* 권하는 요구하는 패키지는 어플을 종료했다가 다시 켜주는 것이 좋음
+
+iOS 권한 설정
+	1. info.plist 파일 들어가기
+	2. <dict> 태그 안에 <key>태그로 필요한 권한 작성(순서 상관X. 아무곳에 작성)
+	3. <key>태그 아래에 <String>태그로 사용하는 이유 작성
+
+	<dict>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<String>This app requires PhotoLibrary Permission</String>
+		<key>NSCameraUsageDescription</key>
+		<String>This app requires NSCameraUsageDescription</String>
+		<key>NSMicrophoneUsageDescription</key>
+		<String>This app requires NSMicrophoneUsageDescription</String>
+		...
+	</dict>
+
+image_picker 사용하기
+	import 'package:image_picker/image_picker.dart';
+	
+	...
+	final ImagePicker _picker = ImagePicker();
+	//pick an image
+	final XFile? image = await _picker.pickImage(source: ImageSource);
+	//capture a photo
+	final XFile? photo = await _picker.pickImage(source: ImageSource);
+	//pick a video
+	final XFile? image = await _picker.pickVideo(source: ImageSource);
+	//capture a video
+	final XFile? video = await _picker.pickVideo(source: ImageSource);
+	//pick multiple images
+	final List<XFile>? images = await _picker.pickMultiImage();
+
+asMap()
+	map() 위젯과 달리 index를 사용할 수 있음
+	asMap() : <index, value>값을 가짐
+        e.key : key가 리스트의 index를 나타냄
+        e.value : value가 리스트의 내용을 나타냄
+	
+	print(selectedImages.asMap().entries.map((e) => e.key + '. ${e.value}'));
+
+secret_cat_sdk
+	https://pub.dev/packages/secret_cat_sdk
+	비밀듣는 고양이를 만들기 위한 패키지
+	비밀을 듣록하고 공유할 수 있음
+	3가지의 핵심 기능을 사용할 수 있음
+		비밀 불러오기: fetchSecret()
+		유저 불러오기: fetchAuthors()
+		비밀 작성하기: addSecret(String secret)
