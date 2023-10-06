@@ -31,6 +31,7 @@ class _SecretPageState extends State<SecretPage> {
 
   ];
 
+  //다이얼로그 버튼 핸들링
   _onChangedSecret(String conceptTitle, String conceptSubtitle, String conceptThumbUrl){
     concepts.add({
       'thumbnail' : conceptThumbUrl,
@@ -41,7 +42,7 @@ class _SecretPageState extends State<SecretPage> {
     setState(() {});
   }
 
-  //결과값을 다이얼로그로 출력
+  //다이얼로그로 concepts 리스트에 concept 추가
   //Dialog란, 앱에서 팝업창처럼 화면위에 화면을 띄우는것
   showResultDialog(BuildContext context) {
     showDialog(
@@ -94,6 +95,7 @@ class _SecretPageState extends State<SecretPage> {
                       ),
                     ),
                     SizedBox(height: 8,),
+
                     ElevatedButton(
                       onPressed: () {
                         _onChangedSecret(titleTextEditingController.text, subtitleTextEditingController.text, thumbUrlTextEditingController.text); // 버튼을 눌렀을 때 함수 실행

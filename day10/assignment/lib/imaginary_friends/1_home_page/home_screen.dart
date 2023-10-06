@@ -48,10 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   }, 
                   child: Text('상상 친구들', style: TextStyle(fontWeight: FontWeight.bold))
                 ),
-                TextButton(
-                  onPressed: (){}, 
-                  child: Text('비밀 공유', style: TextStyle(fontWeight: FontWeight.bold))
-                ),
+                // TextButton(
+                //   onPressed: (){}, 
+                //   child: Text('비밀 공유', style: TextStyle(fontWeight: FontWeight.bold))
+                // ),
               ]
             )
           ],

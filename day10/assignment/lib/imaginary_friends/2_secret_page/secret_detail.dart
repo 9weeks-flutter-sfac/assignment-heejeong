@@ -34,18 +34,19 @@ class _SecretDetailState extends State<SecretDetail> {
   ];
   final random = Random();
 
-  // void _openSecretUpload() async {
-  //   final result = await Navigator.of(context).push(
-  //                           MaterialPageRoute(
-  //                             builder: (context) => SecretUpload()
-  //                           )
-  //                         );
+  //비밀 업로드
+  void _openSecretUpload() async {
+    final result = await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SecretUpload()
+                            )
+                          );
 
-  //   // 이전 화면으로부터 데이터를 받아와서 업로드 내용 갱신
-  //   if (result != null) {
-  //     setState(() {});
-  //   }
-  // }
+    // 이전 화면으로부터 데이터를 받아와서 업로드 내용 갱신
+    if (result != null) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,17 +106,9 @@ class _SecretDetailState extends State<SecretDetail> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => SecretUpload()
-                            )
-                          ),
-                
+        onPressed:_openSecretUpload,
         child: Icon(Icons.add),
-
       ),
-
-
     );
   }
 }
