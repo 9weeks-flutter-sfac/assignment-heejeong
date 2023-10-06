@@ -9,6 +9,9 @@ class SecretPage extends StatefulWidget {
 }
 
 class _SecretPageState extends State<SecretPage> {
+  var titleTextEditingController = TextEditingController();
+  var subtitleTextEditingController = TextEditingController();
+  var thumbUrlTextEditingController = TextEditingController();
   List<Map<String, String>> concepts = [
     {
       'thumbnail' : 'https://plus.unsplash.com/premium_photo-1692951205720-49f0832fcc1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIzM3xxUFlzRHp2Sk9ZY3x8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60',
@@ -28,6 +31,90 @@ class _SecretPageState extends State<SecretPage> {
 
   ];
 
+  _onChangedSecret(String conceptTitle, String conceptSubtitle, String conceptThumbUrl){
+    concepts.add({
+      'thumbnail' : conceptThumbUrl,
+      'title': conceptTitle,
+      'subtitle': conceptSubtitle
+      });
+    print(concepts.last);
+    setState(() {});
+  }
+
+  //결과값을 다이얼로그로 출력
+  //Dialog란, 앱에서 팝업창처럼 화면위에 화면을 띄우는것
+  showResultDialog(BuildContext context) {
+    showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0)
+              ),
+              child: SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              height: 250,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: titleTextEditingController,
+                      decoration: InputDecoration(
+                        label: Text('TITLE'),
+                        hintText: "공유하고 싶은 CONCEPT",
+                        border: OutlineInputBorder( // 테두리 스타일 설정
+                          borderRadius: BorderRadius.circular(10.0), // 둥근 모서리 설정
+                          borderSide: BorderSide(color: Colors.blue), // 테두리 색상 설정
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8,),
+                    TextField(
+                      controller: subtitleTextEditingController,
+                      decoration: InputDecoration(
+                        label: Text('SUBTITLE'),
+                        hintText: "공유하고 싶은 CONCEPT의 소개",
+                        border: OutlineInputBorder( // 테두리 스타일 설정
+                          borderRadius: BorderRadius.circular(10.0), // 둥근 모서리 설정
+                          borderSide: BorderSide(color: Colors.blue), // 테두리 색상 설정
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8,),
+                    TextField(
+                      controller: thumbUrlTextEditingController,
+                      decoration: InputDecoration(
+                        label: Text('THUMBNAIL'),
+                        hintText: "썸네일의 주소",
+                        border: OutlineInputBorder( // 테두리 스타일 설정
+                          borderRadius: BorderRadius.circular(10.0), // 둥근 모서리 설정
+                          borderSide: BorderSide(color: Colors.blue), // 테두리 색상 설정
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8,),
+                    ElevatedButton(
+                      onPressed: () {
+                        _onChangedSecret(titleTextEditingController.text, subtitleTextEditingController.text, thumbUrlTextEditingController.text); // 버튼을 눌렀을 때 함수 실행
+                        //텍스트필드의 텍스트 초기화
+                        titleTextEditingController.text = '';
+                        subtitleTextEditingController.text = '';
+                        thumbUrlTextEditingController.text = '';
+                        //대화상자 창 닫기
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('추가하기')
+                    )
+                  ]
+                ),
+              ),
+            ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +130,7 @@ class _SecretPageState extends State<SecretPage> {
           ),
         ),
       ),
+
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(image: NetworkImage(
@@ -51,29 +139,39 @@ class _SecretPageState extends State<SecretPage> {
           )
         ),
 
-        child: ListView.builder(
-          itemCount: concepts.length,
-          itemBuilder: (context, index){
-            return InkWell(
-              onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => SecretDetail(
-                                secretTitle: concepts[index]['title']!,
-                                backgroundImageUrl: concepts[index]['thumbnail']!,
+        //appbar까지 영역확장되어 있기 때문에 SafeArea 사용
+        child: SafeArea(
+          child: ListView.builder(
+            itemCount: concepts.length,
+            itemBuilder: (context, index){
+              return InkWell(
+                onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SecretDetail(
+                                  secretTitle: concepts[index]['title']!,
+                                  backgroundImageUrl: concepts[index]['thumbnail']!,
+                                )
                               )
-                            )
-                          ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(concepts[index]['thumbnail']!),
-                ),
-                title: Text(concepts[index]['title']!),
-                subtitle: Text(concepts[index]['subtitle']!),
-              )
-            );
-          }
-          ),
-      )
+                            ),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(concepts[index]['thumbnail']!),
+                  ),
+                  title: Text(concepts[index]['title']!),
+                  subtitle: Text(concepts[index]['subtitle']!),
+                )
+              );
+            }
+          )
+        ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          showResultDialog(context);
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

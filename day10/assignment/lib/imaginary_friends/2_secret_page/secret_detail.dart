@@ -34,6 +34,19 @@ class _SecretDetailState extends State<SecretDetail> {
   ];
   final random = Random();
 
+  // void _openSecretUpload() async {
+  //   final result = await Navigator.of(context).push(
+  //                           MaterialPageRoute(
+  //                             builder: (context) => SecretUpload()
+  //                           )
+  //                         );
+
+  //   // 이전 화면으로부터 데이터를 받아와서 업로드 내용 갱신
+  //   if (result != null) {
+  //     setState(() {});
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +69,8 @@ class _SecretDetailState extends State<SecretDetail> {
             fit: BoxFit.cover
           )
         ),
-        child: FutureBuilder(
+        child: SafeArea(
+          child: FutureBuilder(
                 future: SecretCatApi.fetchSecrets(),
                 builder: (context, snapshot){
                   if(snapshot.connectionState == ConnectionState.done){
@@ -87,7 +101,7 @@ class _SecretDetailState extends State<SecretDetail> {
                   } 
                   return LinearProgressIndicator();
                 }
-              ),
+              )),
       ),
 
       floatingActionButton: FloatingActionButton(

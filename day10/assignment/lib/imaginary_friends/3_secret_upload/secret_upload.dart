@@ -77,7 +77,7 @@ class _SecretUploadState extends State<SecretUpload> {
             ElevatedButton(
               onPressed: () {
                 _onChangedSecret(textEditingController.text); // 버튼을 눌렀을 때 함수 실행
-                Navigator.of(context).pop();
+                Navigator.pop(context, textEditingController.text);
               },
               child: Text('공유하기')
             )

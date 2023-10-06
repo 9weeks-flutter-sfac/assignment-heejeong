@@ -38,6 +38,7 @@ class _ImaginaryFriendsState extends State<ImaginaryFriends> {
         ),
       ),
       body: Container(
+        padding: const EdgeInsets.only(top: 27),
         decoration: BoxDecoration(
           image: DecorationImage(image: NetworkImage(
             'https://images.unsplash.com/photo-1695381517206-2be6c8adce33?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM0fHFQWXNEenZKT1ljfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60'),
@@ -45,7 +46,8 @@ class _ImaginaryFriendsState extends State<ImaginaryFriends> {
           )
         ),
 
-        child: FutureBuilder(
+        child: SafeArea(
+          child: FutureBuilder(
                 future: SecretCatApi.fetchSecrets(),
                 builder: (context, snapshot){
                   if(snapshot.connectionState == ConnectionState.done){
@@ -84,7 +86,7 @@ class _ImaginaryFriendsState extends State<ImaginaryFriends> {
                   } 
                   return LinearProgressIndicator();
                 }
-              ),
+              )),
       )
     );
   }
