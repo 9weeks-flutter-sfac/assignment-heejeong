@@ -53,7 +53,8 @@ List, for, map, where, ListView.builder<br>
 
 <Strong>7일차 과제</Strong><br>
 packages<br>
-<div><img src="https://file.notion.so/f/f/30db20a9-090d-4eab-88e9-e004dc368042/73034bc9-4056-437d-9d27-5e4f5841c647/ezgif.com-resize.gif?id=2c549772-ea89-4ee9-94fa-0d820dcf99f7&table=block&spaceId=30db20a9-090d-4eab-88e9-e004dc368042&expirationTimestamp=1697068800000&signature=tDPTR3YgNCl7bzwFfKyLhlTBOMfgiT1ok0KK8M8sjcY&downloadName=ezgif.com-resize.gif" width="15%" height="15%"></div>
+<div><img src="https://file.notion.so/f/f/30db20a9-090d-4eab-88e9-e004dc368042/73034bc9-4056-437d-9d27-5e4f5841c647/ezgif.com-resize.gif?id=2c549772-ea89-4ee9-94fa-0d820dcf99f7&table=block&spaceId=30db20a9-090d-4eab-88e9-e004dc368042&expirationTimestamp=1697068800000&signature=tDPTR3YgNCl7bzwFfKyLhlTBOMfgiT1ok0KK8M8sjcY&downloadName=ezgif.com-resize.gif" width="15%" height="15%">
+<img src="https://file.notion.so/f/f/30db20a9-090d-4eab-88e9-e004dc368042/3e8de89e-386a-413d-a905-9bf897788512/ezgif.com-resize_(1).gif?id=78ec7bba-e3c6-4525-9d2c-cc4642d0486d&table=block&spaceId=30db20a9-090d-4eab-88e9-e004dc368042&expirationTimestamp=1697068800000&signature=qcF-HFVww4UDywijk2Lj6wbFG3lfk__WPYSemeN98Nw&downloadName=ezgif.com-resize+%281%29.gif" width="15%" height="15%"></div>
 <br>
 
 <Strong>8일차 과제</Strong><br>
