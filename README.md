@@ -71,7 +71,7 @@ HTTP, Dio, FutureBuilder, null-safety, 예외처리, 로딩 위젯<br>
 <div></div>
 <br>
 
-<Strong11일차 과제</Strong><br>
+<Strong>11일차 과제</Strong><br>
 IceBreaking<br>
 <div></div>
 <br>
