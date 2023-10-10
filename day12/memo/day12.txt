@@ -1,0 +1,185 @@
+Widgets
+    Stack
+        위젯을 쌓고 싶을 때 사용, Positioned 위젯과 함께 사용한다
+        자식위젯의 가장 마지막이 제일 상단에 쌓임
+    Divider
+        구분선을 넣고 싶을 때 사용
+    AnimatedOpacity
+        (불투명도 애니메이션)Opacity 값을 바꿔주면 사이값을 자동으로 애니메이션 효과를 적용
+    AnimatedContainer
+        캐치되는 속성값을 감지하는 애니메이션
+    AspectRatio
+        자식 위젯의 사이즈 비율을 정확히 맞춰야 할 때 사용
+        (보통 비디오를 넣어야할 때 4:3, 정사각형을 보여줄 때 1:1)
+    Wrap
+        Row는 화면에서 벗어나면 안되지만, Wrap은 다음 줄로 넘어가도록 함
+
+Packages
+    url_launcher
+        전화걸기, 메세지보내기, 특정 URL 웹으로 이동(카카오톡 채널로 이동)
+    cached_network_image
+        이미지를 캐싱할 수 있도록 함
+        캐시가 있으면 그것을 사용, 없다면 요청
+    intl
+        화폐표시, 시간표시
+
+데이터 저장(로컬 VS 서버)
+    서버를 이용하면 비용이 비쌈
+    앱내에서 데이터를 저장할 수 있는 경우 저장해주는 것이 좋음
+        ex) 즐겨찾기, 장바구니
+
+앱내에 저장할 데이터
+    로컬기반 어플
+        모든 데이터를 앱에 저장
+    자동 로그인
+        로그인 후 받은 JWT 토큰을 내부에 저장
+    장바구니
+    동영상 플렛폼에서 시청기록
+        만약 멀티 디바이스 체계를 가지고 있다면 서버에서 관리해야함
+
+앱을 종료해도 불러와서 사용할 수 있는 데이터
+    앱 내에 저장하는 데이터, 앱 데이터라고 하며 언제든 저장하고 불러와서 사용 가능
+    
+    1. 앱 데이터 접근 '객체' 초기화
+    2. 내용 저장
+    3. 내용 불러오기
+
+    * 앱 내 데이터를 구현하는 패키지를 이용하면 구현할 수 있음
+        shared_preferences 패키지 사용
+
+Class
+    객체지향프로그래밍, OOP
+    클래스를 통해 생성된 결과물이 객체(Object) or 인스턴스(Instance)라고 불림
+        인스턴스: 실제 메모리에 올라가 있는 것
+
+    멤버변수
+        클래스(객체) 내에서 사용할 수 있는 변수들
+    멤버함수
+        클래스(객체) 내에서 사용할 수 있는 함수들
+    생성자
+        객체를 생성할 수 있는 생성함수
+
+Constructor(클래스 생성자)
+    객체를 생성해주는 핵심 함수, 생성자 함수
+    생성자가 없으면 객체를 생성해서 변수에 넣어주지 못함
+    클래스명을 넣고 필수 멤버 변수를 괄호안에 다 넣어주면 됨
+
+    1. 이름 없는 생성자(Unnamed Constructor)
+    Class User{
+        //멤버 변수
+        final name;
+
+        //생성자함수
+        User(this.name);
+    }
+
+    2. 이름 있는 생성자(Named Constructor)
+    Class User{
+        //멤버 변수
+        final name;
+
+        //이름있는 생성자함수
+        User.withName(String inputName) :
+            name = inputName;
+    }
+
+선택 매개변수
+    플러터처럼 속성값도 명확히 나타내고 싶을 때 사용
+    curly bracket({}) 안에 작성
+
+    class User{
+        //멤버 변수
+        String name;
+        String? phone;
+
+        //생성자함수
+        //User.withName({required this.name, String? this.phone});
+        User.withName({required String inputName, String? inputPhone})
+            : name = inputName,
+            phone = inputPhone;
+    }
+
+    주의) '선택 매개변수'는 무조건 값이 들어와야하기 때문에 required 키워드를 써줘야함
+
+.fromMap 을 통한 객체 생성
+    Json으로 받은 데이터를 사용하기 위해 Map으로 바꿔줌
+
+    //이름있는 생성자
+    Word.fromMap(Map<String, dynamic> map)
+        : word = map['word'],
+            meaning = map['meaning'],
+            example = map['example'];
+
+    void main() {
+        Map<String, dynamic> networkData = {
+            "word": "apple",
+            "meaning": "사과",
+            "example": "I want to eat an apple"
+        };
+
+        //데이터 받음
+        var word = Word.fromMap(networkData);
+        print(word);
+    }
+
+    * 지금은 하드코드지만 실제로는 데이터를 받아와 사용
+
+.toMap
+    서버에다가 해당 객체내용을 보내야할 때 주로 사용됨
+    (백엔드 스펙에 따라 다름)
+    Map을 배출해주는(toMap) 멤버 함수 추가,
+
+    Map<String, dynamic> toMap() => {
+        'word' : word,
+        'meaning' : meaning,
+        'example' : example
+    };
+
+    void main() {
+        Map<String, dynamic> networkData = {
+            "word": "apple",
+            "meaning": "사과",
+            "example": "I want to eat an apple"
+        };
+
+        //데이터 받음
+        var word = Word.fromMap(networkData);
+        print(word.toMap());
+    }
+
+@override
+    기존의 기능(부모)을 새로 재정의
+
+    동일하게 각 객체를 만들었어도 다른 객체임
+    var human1 = Human(name:'teddy');
+    var human2 = Human(name:'teddy');
+    print(human1 == human2);
+
+    결과: false
+    * 각 객체에 hashCode를 출력해보면 다름 값이 나옴
+      human1.hashCode != human2.hashCode
+
+    custom 한 클래스가 서로 같은지에 대한 기준을 재정의
+        일반적인 코드
+
+        @override
+        operator == (Object other){
+            if(other is Human){
+                return name == other.name;
+            }
+            return false;
+        }
+        
+        *먼저 동일한 클래스인지 확인
+
+        축약한 코드
+
+        @override
+        operator == (Object other){
+            return other is Human && name == other.name;
+        }
+
+        더 축약한 코드
+
+        @override
+        operator == (Object other) => other is Human && name == other.name;

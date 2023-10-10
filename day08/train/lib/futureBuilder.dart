@@ -71,7 +71,14 @@ class _MyWidgetState extends State<MyWidget> {
                   print('현재 스냅샷 정보: ${snapshot.connectionState}');
                   print('hasData 값: ${snapshot.hasData}');
                   if(snapshot.connectionState == ConnectionState.done){	// 현재 futurebuilder의 상채가 끝났을 때
-                    return Text(snapshot.data?.data.toString() ?? "실패");
+                    return Column(
+                      children: [
+                        Text(snapshot.data?.data.toString() ?? "실패"),
+                        ElevatedButton(
+                          onPressed: (){setState(() {});}, 
+                          child: Text('setState'))
+                      ]
+                      );
                     // return Text(snapshot.data!.data['result']);
                   }
                   // if(snapshot.hasData){
@@ -85,6 +92,7 @@ class _MyWidgetState extends State<MyWidget> {
                     children: [
                       Text('인터넷 연결확인 중'),
                       LinearProgressIndicator(),
+                      
                     ]
                   );
                   // return Container( //빈 위젯을 보내줌

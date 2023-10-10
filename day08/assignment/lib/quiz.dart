@@ -16,31 +16,38 @@ class _MyWidgetState extends State<MyWidget> {
   var dio = Dio();
   var result='시작';
 
-  void getDataUsingDio() async {
-    var res;
-    for(var i=100;i<=150;i++){
+  void postDataUsingDio() async {
+    var i;
+    for (i = 100; i <= 150; i++) {
+      print(i);
       try {
-        print(i);
-        res = await dio.get('https://sniperfactory.com/sfac/http_assignment_${i}',
+        var res = await dio.post(
+          'https://sniperfactory.com/sfac/http_assignment_${i}',
           options: Options(
-          headers: {
-          "user-agenct" : "SniperFactoryBrowser",
-          "authorization" : "Bearer ey-12312312312312"}
-        ));
-        if(res != null) print(i);break;
-      }catch(e){
+            headers: {
+              "user-agent": "SniperFactoryBrowser",
+              "authorization": "Bearer ey-12312312312312"
+            },
+          ),
+        );
+        if (res.data != null) {
+          print('들어와?'); //출력됌. if문 들어오는데 break가 안됌. why????
+          result = res.data;
+          break; // 연결이 성공하면 루프를 빠져나갑니다.
+        }
+      } catch (e) {
         result = '${e}';
       }
-      setState(() {});
     }
-
-    if (res != null) {
-      result = res.data;
-      print(res.data);
-      setState(() {});
-    }
-    
+    // 루프가 끝난 후 i 값을 확인하여 어떤 정수에서 연결이 성공했는지 확인할 수 있습니다.
+    print('연결 성공한 정수: $i');
+    setState(() {
+      // result 변수의 값이 변경되었을 때만 setState()를 호출합니다.
+      result = result;
+    });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +59,9 @@ class _MyWidgetState extends State<MyWidget> {
               Text(result),
               TextButton(
                 onPressed: (){
-                  getDataUsingDio();
+                  postDataUsingDio();
                 }, 
-                child: Text('getDataUsingDio'),
+                child: Text('postDataUsingDio'),
               ),
             ]
             ),
