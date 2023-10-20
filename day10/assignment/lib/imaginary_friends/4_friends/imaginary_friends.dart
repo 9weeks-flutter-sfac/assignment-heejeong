@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:secret_cat_sdk/api/api.dart';
 import 'package:secret_cat_sdk/model/secret.dart';
@@ -68,28 +69,31 @@ class _ImaginaryFriendsState extends State<ImaginaryFriends> {
                           avatarList.shuffle(random);
                           var author = secretList[index].author;
 
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              author?.avatar != null
-                                  ? CircleAvatar(
-                                      backgroundImage:
-                                          NetworkImage(author!.avatar!),
-                                    )
-                                  : CircleAvatar(
-                                      child: Image.network(
-                                        avatarList[0],
-                                      ),
-                                    ),
-                              author?.username != null
-                                  ? Text(
-                                      author!.username,
-                                      style: TextStyle(color: Colors.white),
-                                    )
-                                  : Text('익명',
-                                      style: TextStyle(color: Colors.white)),
-                            ],
-                          );
+                          return ZoomIn(
+                              delay: Duration(milliseconds: 200 * index),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  author?.avatar != null
+                                      ? CircleAvatar(
+                                          backgroundImage:
+                                              NetworkImage(author!.avatar!),
+                                        )
+                                      : CircleAvatar(
+                                          child: Image.network(
+                                            avatarList[0],
+                                          ),
+                                        ),
+                                  author?.username != null
+                                      ? Text(
+                                          author!.username,
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                      : Text('익명',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                ],
+                              ));
                         },
                       );
                     }

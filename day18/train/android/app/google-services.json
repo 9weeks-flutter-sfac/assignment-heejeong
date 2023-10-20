@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1023744520777",
+    "project_id": "sfac-test-eacdc",
+    "storage_bucket": "sfac-test-eacdc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023744520777:android:33a232608bc772d0bec598",
+        "android_client_info": {
+          "package_name": "com.example.train"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBixdW_JYCECUAa9tTvdRE3jC_OLwNqApQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

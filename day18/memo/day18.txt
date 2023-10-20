@@ -1,0 +1,103 @@
+BaaS(Backend as a Service)
+    백엔들르 대신 서비스해주는 것(백엔드가 불필요)
+    대표적인 Big BaaS
+        Firebase VS AWS Amplify
+    여러 BaaS 중에 어떤 것을 사용할 지 정하는 것
+
+Firebase
+    Google이 만든 BaaS로, 손쉽게 프로젝트를 생성할 수 있으며 다음의 기능을 구현할 수 있음
+        Authentication
+            SNS 로그인 - 구글, 애플, 페북 등
+            일반 로그인 - 아이디/비밀번호, 전화인증
+        Cloud Firestore
+            데이터베이스처럼 사용할 수 있는 DB시스템
+            NoSQL 방식
+        Cloud Storage
+            AWS S3와 같이, 저장공간을 제공함
+            이미지, 동영상, 파일등을 저장할 수 있는 공간
+        Cloud Functions
+            백엔드에서 실행할 수 있는 함수들
+            결제처리와 같은 어플 동작에 필요한 백엔드의 커스텀 함수
+            Blaze만 해당
+        In-App messaging
+            어플이 설치된 사용장들에게 푸시알림을 보내는 기능
+            사용자별 권한/토큰이 필요한 부분
+
+        * 무료이며 요금제가 있고, 사용량이 정해져있음
+            Spark(무료)
+            Blaze(유료, 종량제, 사용하는 만큼)
+
+Firebase Project 연동
+    1. Firebase 콘솔 접속
+        https://console.firebase.google.com/?pli=1
+    2. Firebase 프로젝트 생성
+    3. Firebase CLI 설치
+        node.js로 설치하기(왠만하면 독립... 설치X)
+        (독립라이브러리? 그걸로 설치하면 ...CLI.exe 에서만 작업해야함)
+        vscode의 터미널로 작업 시, cmd창(혹은 bash)인지 확인!!
+        (powershell로 작업하면 firebase 안됌!!!!)
+        CLI? Commend-line interface, 커맨드탕에서 사용하는 서비스(혹은 프로그램)
+    4. 플러터 프로젝트 생성
+    5. 플러터 프로젝트 적용
+        dart pub goole activate flutterfire_cli
+        flutterfire configure --project={프로젝트명}
+        -플렛폼 선택(iOS, Android)
+    6. 사용할 패키지 설치
+        firebase_core (필수)
+            https://pub.dev/packages/firebase_core
+        cloud_firestore (선택)
+            https://pub.dev/packages/cloud_firestore
+        ...(https://firebase.flutter.dev/)
+
+        * 터미널로 flutter 패키지 설치 방법
+            flutter pub add [패키지명]
+        * 명령팔레트로 flutter 패키지 설치 방법
+            ctrl+shift+p -> [패키지명] 입력
+    7. 실행 (실행할 때 왠만하면 web으로 하지 말자!!)
+
+
+Tip
+    1. Firebase 기능들은 보통 Singleton 방식
+        어떠한 페이지에서 Firebase 인스턴스를 호출해도 동일한 연결정보를 가져옴
+
+Cloud Firestore
+    https://pub.dev/packages/cloud_firestore
+    NoSQL 방식의 데이터베이스 시스템으로 사용됨
+    CRUD방식으로 데이터를 손쉽게 다룰 수 있음
+    사용하기 전에 다음 코드를 반드시 포함해야함
+        WidgetsFlutterBinding.ensureInitialized();
+        Firebase.initializedApp(options:...);
+
+CRUD
+    read, create, update, delete
+
+Read
+    데이터를 읽음
+    해당 컬렉션의 문서들을 가져옴
+        FirebaseFirestore.instance.collection(컬렉션명).get();
+    해당 컬렉션의 선택 문서를 하나만 가져옴
+        FirebaseFirestore.instance.collection(컬렉션명).doc(문서명);        
+    해당 컬렉션에 필터를 걸고, 해당되는 문서들을 가져옴
+        FirebaseFirestore.instance.collection(컬렉션명).where(키, isEqualTo: true).get();
+
+Create
+    데이터를 생성
+    Docld 자동(Unique auto-generated)
+        FirebaseFirestore.instance
+            .collection(컬렉션명)
+            .add({'title': title, 'isFinished': false})
+    지정 Docld (set)
+        예) userId를 documentID로 씀
+            FirebaseFirestore.instance.collection('memo')
+            .doc(docId).set({'title': title, 'isFinished': false})
+
+    * 만약 이미 존재하는 id라면?
+        SetOption(merge: true) 값을 주어서 새로운 값으로 덮어씌울 수 있음
+        FirebaseFirestore.instance.collection('memo').doc(docId).update({'키': value});
+
+Delete
+    데이터를 삭제
+        FirebaseFirestore.instance.collection('memo').doc(docId).delete();
+
+
+

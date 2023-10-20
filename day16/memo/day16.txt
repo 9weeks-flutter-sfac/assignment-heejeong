@@ -1,0 +1,379 @@
+immutable
+    이뮤터블 '불변', 변하지 않는 상태
+    우리의 데이터는 도중에 절때 바뀌면 안됌
+
+immutable 두 가지 방법
+    방법1 : const
+        const String name = 'Teddy';
+        name = 'Tedster';   //에러발생
+    
+    방법2 : final
+    final String name = 'Teddy';
+    name = 'Tedster';   //에러발생
+
+const VS final
+
+    const List<String> name = ['Teddy'];
+    name.add('Chris');  //에러발생
+    
+    final List<String> name = ['Teddy'];
+    name.add('Chris');  //가능
+
+    const :  컴파일 타임에 미리 정의
+        즉, 어플 개발을 다 마치고 어플 개발품 상태 그 자체
+    final : 런타임에 정의
+        어플이 실행될 때 결정하는 데이터 그 자체
+
+    예를 들어, DateTime() 함수는 무조건 final 로 설정해야함
+    따라서, const로 정의한 데이터는 속도가 더 빠르고 효율적으로 활용가능
+
+Linting(파란색 라인)
+    BuildTestWidgetState()을 보면 Text, Container, GesturDetector 이 있음
+    flutter devtool에서 보면, const로 만들어진 Stateless Widget은 이미 빌드가
+    한 번 됐기 때문에 컴파일때 새로 빌드 할 필요가 없음
+    const키워드를 넣으라고 알려줌
+        컴파일때 한 번 해놓으면 런타임(어플실행)때 안해도 돼서 성능개선 가능하다고 알림
+    analysis_options.yaml에 등록하면 알림 안뜸
+    
+Static
+    Class 자체에 데이터를 넣어줄 때 사용
+    해당 생성자로 여러 객체가 만들어져도 전부 똑같은 값을 가짐
+
+    ex1) 페이지별 라우트를 넣어주고 관리할 때
+        
+        class LoginPage extends StatelessWidget{
+            const LoginPage({super.key});
+            static const String route = '/login';
+
+            @verride
+            Widget build(BuildContext context){
+                return Scaffold(...);
+            }
+        }
+
+    void main(){
+        LoginPage.route
+    }
+
+    ex2) 정적 데이터를 보관하고 싶을 때
+
+        class AppRoutes{
+            static const String login = LoginPage.route;
+            static const String main = MainPage.route;
+            static const String signup = SignupPage.route;
+
+        }
+
+        void main(){
+            Get.toNamed(AppRoutes.main);
+        }
+
+        class BackendApiRoutes{
+            static const String readPosts = '/api/v1/posts';
+            static const String readMemos = '/api/v1/memos';
+        }
+
+        void main(){
+            Dio dio = Dio();
+
+            dio.get(BackendApiRoutes.readPosts);
+        }
+
+getter
+    멤버변수처럼 추가 정의하고 싶을 때 사용
+    멤버변수를 따로 설정하지 않고도 원하는 데이터를 정의하고 싶을 때 사용
+
+    class Student{
+        static const schoolName = 'Teddy's school';
+        string studentId;
+        String name;
+
+        Student(this.name, this.studentId);
+
+        String get studentInfo = >studentId + name;
+    }
+
+    void main(){
+        var stu1 = Student('Teddy', '011-11');
+        print(stu1.studentInfo);
+    }
+
+    ex1) GetxController에서 value를 쓰는게 불편했다면?
+
+        class AppGlobalDataController extends GetxController{
+            RxString myName = 'Teddy'.obs;
+
+            String get name => myName.value;
+            int get nameLength => name.length;
+        }
+
+Setter
+    멤버변수에 새로운 값을 넣고 싶을 때 사용
+    멤버변수에 직접 접근하지 않고 특별한 멤버변수명으로 값을 할당하고 싶을 때 사용
+
+    class Student{
+        static const schoolName = 'Teddy's school';
+        string studentId;
+        String name;
+
+        Student(this.name, this.studentId);
+
+        String get studentInfo = >studentId + name;
+
+        Set studentName(String v){
+            if(v.length < 3){
+                return;
+            }
+            name = v;
+        }
+    }
+
+    void main(){
+        var stu1 = Student('Teddy', '011-11');
+        print(stu1.name);   //Teddy
+        stu1.studentName = 'ty';
+        print(stu1.name);   //Teddy
+    }
+
+Getx Pages
+    앱내에서 사용할 페이지를 미리 등록해놓고, URL 방식으로 활용
+
+    기존의 네비게이션
+        Get.to(()=>MainPage());
+        Get.to(()=>SignupPage());
+        Get.to(()=>ErrorPage());
+
+    URL방식의 네비게이션
+        Get.toNamed('/');
+        Get.toNamed('/signup');
+        Get.toNamed('/error');
+
+    라우팅 방식으로 사용하려면, GetMaterialApp에 미리 등록해야함
+        GetMaterialApp(
+            ...
+            getPages: [
+                GetPage(name: '/main', page: ()=>MainPage()),
+                GetPage(name: '/login', page: ()=>LoginPage()),
+                GetPage(name: '/signup', page: ()=>SignupPage()),
+            ]
+        )
+    
+    사용법
+        TextButton(
+            onPressed:(){
+                Get.toNamed('/login');
+
+                //전 페이지로 돌아가지 못함
+                Get.offAndToNamed(LoginPage.route);
+            },
+            child: Text('로그인하기')
+        )
+
+효과적으로 코딩하기
+    GetPages 따로 관리하기
+        lib/util/pages.dart
+        class AppPages{
+            //const를 사용하려면 요소 값들이 const여야함
+            static final pages =[
+                GetPage(
+                    name: LoginPage.route,
+                    page: () => const LoginPage()
+                ),
+                GetPage(
+                    name: MainPage.route,
+                    page: () => const MainPage()
+                ),
+            ];
+        }
+
+        lib/main.dart
+        return GetMaterialApp(
+            getPages: AppPages.pages,
+            home: const MainPage()
+        );
+
+Controller
+    page마다 controller를 두고, 관리해줌
+
+    관심사 분리
+    화면을 보여주는 것을 따로 관리
+    클래스(모델)들을 따로 관리
+    화면 동작(기능) 따로 관리
+
+LoginPage & LoginController
+
+    class LoginController extends GetxController{
+        final idController = TextEditingController();
+        final pwController = TextEditingController();
+
+        login(){
+            var res = await Api().login(idController.text, pwController.text);
+            return res;
+        }
+    }
+
+    class LoginPage extends StatelessWidget{
+        ...
+        return Column(
+            children: [
+                TextField(controller: controller.idController),
+                TextField(controller: controller.pwController),
+                TextButton(
+                    onPressed: controller.login,
+                    child: Text('로그인하기')
+                )
+            ]
+        )
+    }
+
+SignupPage & SignupController
+
+    class SignupController extends GetxController{
+        RxInt curPage = 0.obs;
+
+        final idController = TextEditingController();
+        final pwController = TextEditingController();
+        final pw2Controller = TextEditingController();  //비번 2중 확인
+
+        nextPage() => curPage(curPage.value+1);
+        prevPage() => curPage(curPage.value-1);
+
+        signup(){
+            if(pwController.text == pw2Controller.text || idController != ''){
+                return null;
+            }
+            ...회원가입...
+        }
+    }
+
+    PostPage인 경우, PostController를 만들어서 사용
+    class PostController extends GetxController{
+        RxList<Post> posts =[];
+
+        @override
+        onInt(){
+            super.onInt();
+            readPosts();
+        }
+
+        readPosts() async{
+            posts(await Api.readPosts());
+        }
+    }
+
+    PostDetailPage인 경우, PostDetailController를 만들어서 사용
+    class PostDetailController extends GetxController{
+        PostDetailController({required this.post});
+        post post;
+
+        bool get isMyPost => post.author.id == Get.find<UserController>().user.id
+
+        //행동(기능)
+        like(){
+            var res = await Api.upLike(post.id);
+        }
+
+        share(){
+            ...
+        }
+
+        report(){
+            ...
+        }
+    }
+
+Binding
+    하나의 페이지에서 Get.find를 하기위해서 미리 Get.put을 해야함
+    앱이 시작할 때 전부 Get.put을 실행
+    페이지가 만들어질 때 Get.put을 실행
+
+Binding 방법
+    1. GetMaterialApp의 initialBinding을 활용하는 방법
+        GetMaterialApp이 생성될 때 함께 생성할 Controller를 정의할 수 있음
+
+        initialBinding: BindingBuilder((){
+            Get.put(LoginController());
+            Get.put(MainController());
+            Get.put(AuthorController());
+            Get.put(SignupController());
+
+        })
+
+    2. GetPage에다가 묶어놓는 방법
+        GetPage에 정의할 때 binding을 걸어놓음
+
+        GetPage(
+            name: LoginPage.route,
+            page: () => const LoginPage(),
+            binding: BindingBuilder((){
+                Get.put(LoginController());
+            })
+        )
+
+GetView<controller>
+    put 된 controller를 find 하여 controller 사용하겠다는 것
+    Get.put(), Get.find() 할 필요 없음
+    
+    class LoginPage extends GetView<LoginController> {
+        const LoginPage({super.key});
+        static const String route = '/login';
+
+        @override
+        Widget build(BuildContext context) {
+            return Scaffold(
+                body: TextField(
+                        controller: controller.idController,
+                        decoration: InputDecoration(
+                            hintText: 'ID',
+                        ),
+                ),
+            );
+        }
+    }
+
+initialRoute & 2. GetPage에다가 묶어놓는 방법
+    @override
+    Widget build(BuildContext context) {
+        return GetMaterialApp(
+            getPages: AppPages.pages,
+            theme: ThemeData(useMaterial3: true),
+
+            //getPages가 실행되기 전에 home이 실행되어 
+            //GetView에서 controller를 찾지 못해 error 발생
+            // home: const LoginPage(),
+
+            //getPages가 실행된 후 실행
+            initialRoute: LoginPage.route,
+        );
+    }
+
+initialBinding
+    너무 많은 controller를 담으면 과부하 걸림
+    유저가 모든 페이지를 사용하진 않음
+    '대기'상태에 올려놨다가 사용될 때만 올림
+        'lazy 하게 올림'
+
+Get.lazyPut(() => Controller);
+    해당컨트롤러를 Get.find로 사용할 때 곧바로 Get.put을 함
+    더 효율적이고 퍼포먼스적으로 효율적으로 컨트롤러를 사용할 수 있음
+
+    initialBinding: BindingsBuilder(() {
+        Get.lazyPut(() => LoginController());
+        Get.lazyPut(() => MainController());
+      })
+
+디자인 패턴
+    시스템 구축 방법
+    디자인 패턴 사전: https://refactoring.guru/ko/design-patterns/catalog
+
+MVC 패턴
+    Model, View, Controller로 나누어 목표에 맞게 관심사를 나누는 것
+    Model: 데이터의 구조를 정의
+    View: 데이터를 보여주는 화면에 대한 정의
+    Controller: 데이터를 동작하게하고 상호작용하는 기능에 대한 정의
+
+    *MVC 업그레이드 버전: MVVM
+
+Singleton 패턴
+    하나의 클래스를 여러번 생성해도 하나의 인스턴스만을 사용하는 것
+
